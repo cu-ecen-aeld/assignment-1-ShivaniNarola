@@ -1,17 +1,22 @@
 #!/bin/bash
 
-if [ $# -lt 2 ]; then
-  echo "Error: Missing parameters"
-  exit 1
+if [ $# -ne 2 ]; then
+    echo "Error: Missing arguments."
+    echo "Usage: $0 <file_path> <string_to_write>"
+    exit 1
 fi
 
 writefile=$1
 writestr=$2
 
-mkdir -p "$(dirname "$writefile")"
-echo "$writestr" > "$writefile"
+# Create directory if needed
+dirpath=$(dirname "$writefile")
+mkdir -p "$dirpath"
 
+# Write string to file (overwrite)
+echo "$writestr" > "$writefile"
 if [ $? -ne 0 ]; then
-  echo "Error: Could not write to $writefile"
-  exit 1
+    echo "Error: Could not write to file $writefile"
+    exit 1
 fi
+
